@@ -21,16 +21,15 @@ async def start_commmand(update, context):
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text(
-            f"""
-            Hey,@{username}! Welcome to SimpleEarn!
-            Tap on the coin and see your balance rise.
-            TapSwap is a cutting-edge financial platform where users
-            can earn tokens by leveraging the mining app
-            various features. The majority of TapSwap Token (TAPS)
-            distribution will occur among the players here.
-            Do you have friends, relatives, or co-workers?
-            Bring them all into the game.
-            More buddies, more coins.""" , reply_markup=reply_markup,)
+       f"""
+        Hey @{username}! Welcome to SimpleEarn!
+        Tap on the coin and see your balance rise.
+        TapSwap is a cutting-edge financial platform where users
+        can earn tokens by leveraging the mining app's various features. 
+        The majority of TapSwap Token (TAPS) distribution will occur among 
+        the players here. Do you have friends, relatives, or co-workers? 
+        Bring them all into the game. More buddies, more coins.
+        """, reply_markup=reply_markup,)
 
 async def help_commmand(update, context):
     await update.message.reply_text('How can i help you!')
