@@ -1,27 +1,57 @@
-from flask import Flask, request
-import telegram
-from telegram.ext import Dispatcher, MessageHandler, Filter
+import logging
 
-TOKEN = 'YOUR_BOT_TOKEN'
-bot = telegram.Bot(token=TOKEN)
+from telegram import InlineKeyboardMarkup, InlineKeyboardButton
+from telegram.ext import *
+API_KEY = "6929324010:AAFbxZDJXYbcue55pqbxF4s9wZIqibcd33w"
 
-app = Flask(__name__)
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+logging.info('Starting Bot....')
 
-@app.route('/hook', methods=['POST'])
-def webhook():
-    update = telegram.Update.de_json(request.get_json(force=True), bot)
-    dispatcher.process_update(update)
-    return 'ok'
+async def start_commmand(update, context):
+    user = update.message.from_user
+    username = user.username
+    wurl = "http://t.me/SimpleEn_bot/WebMyapp"
+    hurl = "http://t.me/Crypt0Xali"
+    curl = "http://t.me/Crypt0Xali"
+    # Create an inline keyboard with a button that links to the URL
+    keyboard = [
+        [InlineKeyboardButton("Open Link", url=wurl)],
+        [InlineKeyboardButton("Follow Community", url=curl)],
+        [InlineKeyboardButton("Need Help", url=hurl)]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    await update.message.reply_text(
+            f"""
+            Hey,@{username}! Welcome to SimpleEarn!
+            Tap on the coin and see your balance rise.
+            TapSwap is a cutting-edge financial platform where users
+            can earn tokens by leveraging the mining app
+            various features. The majority of TapSwap Token (TAPS)
+            distribution will occur among the players here.
+            Do you have friends, relatives, or co-workers?
+            Bring them all into the game.
+            More buddies, more coins.""" , reply_markup=reply_markup,)
 
-def start(update, context):
-    update.message.reply_text('Hello! I am your bot.')
+async def help_commmand(update, context):
+    await update.message.reply_text('How can i help you!')
 
-def echo(update, context):
-    update.message.reply_text(update.message.text)
+async def custom_command(update, context):
+    await update.message.reply_text('custom command here')
 
-dispatcher = Dispatcher(bot, None, use_context=True)
-dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
+#async def handl_message(update, context):
+   # text = str(update.message.text).lower()
+  #  logging.info(f'User({update.message.chat.id}) says: {text}')
+
+    # bot response
+  #  update.message.reply_text(text)
 
 if __name__ == '__main__':
-    bot.set_webhook(url='https://YOUR_RENDER_APP_NAME.onrender.com/hook')
-    app.run(host='0.0.0.0', port=5000)
+    application = Application.builder().token(API_KEY).build()
+
+    # Commands
+    application.add_handler(CommandHandler('start', start_commmand))
+    application.add_handler(CommandHandler('help', help_commmand))
+    application.add_handler(CommandHandler('custom', custom_command))
+
+    # Run bot
+    application.run_polling(1.0)
