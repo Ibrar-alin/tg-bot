@@ -14,7 +14,7 @@ async def start_commmand(update, context):
     hurl = "http://t.me/Crypt0Xali"
     curl = "http://t.me/Crypt0Xali"
     turl = "http://t.me/Crypt0Xali"
-    # Create an inline keyboard with a button that links to the URL
+    # Create button that links to the URL
     keyboard = [
         [InlineKeyboardButton("Open Link", url=wurl)],
         [InlineKeyboardButton("Follow Community", url=curl)],
